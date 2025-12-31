@@ -107,15 +107,14 @@ public class Worker : BackgroundService
                 {
 
                     string newFileId;
-                    // 3. Subir o MP3 para o MongoDB
+                    
                     using (var mp3Stream = File.OpenRead(outputPath)) // Bloco using explícito
                     {
                         newFileId = await _storageService.UploadMp3Async(fileId, mp3Stream, userEmail);
-                    } // O stream é fechado aqui
+                    } 
 
                     _logger.LogInformation("Conversão concluída. Novo FileId MP3: {NewFileId}", newFileId);
 
-                    // Limpeza (AGORA FORA DO BLOCO USING)
                     File.Delete(inputPath);
                     File.Delete(outputPath);
 
